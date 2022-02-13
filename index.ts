@@ -51,7 +51,7 @@ scene.add(axesHelper);
 const pts = generateRandomPts(25); //15个点
 const drawPts = (points: typeof pts) => {
   for (let pt of points) {
-    const geometry = new SphereGeometry(0.5);
+    const geometry = new SphereGeometry(0.5+pt.y/limit);
     const mesh = new Mesh(
       geometry,
       new MeshLambertMaterial({
