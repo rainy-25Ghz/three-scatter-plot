@@ -42,10 +42,10 @@ scene.add(new AmbientLight(0xffffff, 0.5));
 scene.add(new THREE.DirectionalLight(0xffffff, 0.5));
 //显示坐标轴与平面
 const axesHelper = new THREE.AxesHelper(5);
-const size = limit*2;
+const size = limit * 2;
 const divisions = 10;
-const gridHelper = new THREE.GridHelper( size, divisions );
-scene.add( gridHelper );
+const gridHelper = new THREE.GridHelper(size, divisions);
+scene.add(gridHelper);
 scene.add(axesHelper);
 //生成随机空间点并绘制
 const pts = generateRandomPts(25); //15个点
