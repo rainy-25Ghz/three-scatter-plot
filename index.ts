@@ -3,9 +3,9 @@ import './style.css';
 
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { SphereGeometry } from 'three/src/geometries/Geometries';
-import { MeshLambertMaterial } from 'three/src/materials/MeshLambertMaterial';
-import { Mesh } from 'three/src/objects/Mesh';
+import { MeshBasicMaterial, SphereGeometry } from 'three';
+import { MeshLambertMaterial } from 'three';
+import { Mesh, AmbientLight } from 'three';
 
 //配置webgl渲染器
 const aspectRatio = window.innerWidth / window.innerHeight;
@@ -33,12 +33,21 @@ const generateRandomPts = (num: number) => {
   return new Array(num).fill([]).map((val) => {
     return {
       x: Math.random() * limit * 2 - limit,
-      y: Math.random() * limit * 2 - limit,
+      y: Math.random() * limit,
       z: Math.random() * limit * 2 - limit,
     };
   });
 };
-
+scene.add(new AmbientLight(0xffffff, 0.5));
+scene.add(new THREE.DirectionalLight(0xffffff, 0.5));
+//显示坐标轴与平面
+const axesHelper = new THREE.AxesHelper(5);
+const size = limit*2;
+const divisions = 10;
+const gridHelper = new THREE.GridHelper( size, divisions );
+scene.add( gridHelper );
+scene.add(axesHelper);
+//生成随机空间点并绘制
 const pts = generateRandomPts(25); //15个点
 const drawPts = (points: typeof pts) => {
   for (let pt of points) {
@@ -46,7 +55,7 @@ const drawPts = (points: typeof pts) => {
     const mesh = new Mesh(
       geometry,
       new MeshLambertMaterial({
-        color: `hsl(${(pt.y * 360) / limit},,100%,100%)`,
+        color: `hsl(${(pt.y * 360) / limit},50%,70%)`,
       })
     );
     mesh.position.set(pt.x, pt.y, pt.z);
